@@ -326,6 +326,8 @@ MonoBehaviour:
   mainCam: {fileID: 1500536638}
   moveSpeed: 14
   rotationSpeed: 45
+  jumpStrenght: 24
+  maxJumpHeight: 8
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
