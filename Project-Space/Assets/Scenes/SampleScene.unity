@@ -234,7 +234,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 233473770}
-  - component: {fileID: 233473767}
   - component: {fileID: 233473771}
   - component: {fileID: 233473772}
   m_Layer: 0
@@ -244,29 +243,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &233473767
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 233473765}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &233473770
 Transform:
   m_ObjectHideFlags: 0
@@ -275,7 +251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233473765}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.094, z: 1.094054}
+  m_LocalPosition: {x: 0, y: 1, z: 1.094054}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -326,9 +302,12 @@ MonoBehaviour:
   mainCam: {fileID: 1500536638}
   moveSpeed: 14
   rotationSpeed: 45
+  cameraNormalOffset: {x: 0, y: 1.25, z: 0}
   jumpStrenght: 10
   maxJumpHeight: 3.2
   gravityStrenght: 9.98
+  playerCrounchingHeight: 1.5
+  cameraCrounchingOffset: {x: 0, y: 0.5, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +861,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601740375}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2499999, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

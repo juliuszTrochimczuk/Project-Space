@@ -53,6 +53,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8892fc8-b895-45ac-8df3-9d388a36976f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7300af9a-fdb6-4190-80d9-0a1713799e52"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_MovementMap_Move = m_MovementMap.FindAction("Move", throwIfNotFound: true);
         m_MovementMap_MouseRotation = m_MovementMap.FindAction("MouseRotation", throwIfNotFound: true);
         m_MovementMap_Jump = m_MovementMap.FindAction("Jump", throwIfNotFound: true);
+        m_MovementMap_Crouch = m_MovementMap.FindAction("Crouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_MovementMap_Move;
     private readonly InputAction m_MovementMap_MouseRotation;
     private readonly InputAction m_MovementMap_Jump;
+    private readonly InputAction m_MovementMap_Crouch;
     public struct MovementMapActions
     {
         private @InputMap m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_MovementMap_Move;
         public InputAction @MouseRotation => m_Wrapper.m_MovementMap_MouseRotation;
         public InputAction @Jump => m_Wrapper.m_MovementMap_Jump;
+        public InputAction @Crouch => m_Wrapper.m_MovementMap_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_MovementMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
         }
 
         private void UnregisterCallbacks(IMovementMapActions instance)
@@ -245,6 +271,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
         }
 
         public void RemoveCallbacks(IMovementMapActions instance)
@@ -267,5 +296,6 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnMouseRotation(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
 }

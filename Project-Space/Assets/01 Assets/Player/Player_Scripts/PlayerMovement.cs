@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using Zenject;
 
 namespace Player
@@ -7,19 +7,41 @@ namespace Player
     public class PlayerMovement : MonoBehaviour
     {
         [Inject] private InputController inputController;
+
+        [Header("Components")]
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Camera mainCam;
+
+        [Header("Basic Movement parametrs")]
         [SerializeField] private float moveSpeed;
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private Vector3 cameraNormalOffset;
+
+        [Header("Jump parametrs")]
         [SerializeField] private float jumpStrenght;
         [SerializeField] private float maxJumpHeight;
+
+        [Space(20)]
         [SerializeField] private float gravityStrenght = 9.98f;
+
+        [Header("Crounching parametrs")]
+        [SerializeField] private float playerCrounchingHeight;
+        [SerializeField] private Vector3 cameraCrounchingOffset;
+        
         private float camYRotation;
         private float gravityForce;
+        private float playerNormalHeight;
         private bool onGround;
         private Coroutine jumpCoroutine;
 
-        private void Start() => inputController.inputActions.MovementMap.Jump.performed += _ => StartJump();
+        private void Start()
+        {
+            inputController.inputActions.MovementMap.Jump.performed += _ => StartJump();
+            inputController.inputActions.MovementMap.Crouch.started += _ => StartCrounching();
+            inputController.inputActions.MovementMap.Crouch.canceled += _ => EndCrounching();
+
+            playerNormalHeight = characterController.height;
+        }
 
         private void Update()
         {
@@ -27,6 +49,7 @@ namespace Player
             Move(inputController.inputActions.MovementMap.Move.ReadValue<Vector2>());
             Rotation(inputController.inputActions.MovementMap.MouseRotation.ReadValue<Vector2>());
             if (jumpCoroutine == null) GravityFall();
+
         }
 
         private void Move(Vector2 inputVector)
@@ -69,6 +92,19 @@ namespace Player
                 gravityForce += -gravityStrenght * Time.deltaTime;
                 characterController.Move(Vector3.up * gravityForce * Time.deltaTime);
             }
+        }
+
+        private void StartCrounching()
+        {
+            characterController.height = playerCrounchingHeight;
+            mainCam.transform.position = gameObject.transform.position + cameraCrounchingOffset;
+        }
+
+        private void EndCrounching()
+        {
+            characterController.height = playerNormalHeight;
+            gameObject.transform.position += new Vector3(0f, 1f, 0f);
+            mainCam.transform.position = gameObject.transform.position + cameraNormalOffset;
         }
     }
 }
