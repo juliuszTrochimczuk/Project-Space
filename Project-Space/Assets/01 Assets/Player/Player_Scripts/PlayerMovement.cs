@@ -13,7 +13,9 @@ namespace Player
         [SerializeField] private Camera mainCam;
 
         [Header("Basic Movement parametrs")]
-        [SerializeField] private float moveSpeed;
+        [SerializeField] private float normalMoveSpeed;
+        [SerializeField] private float crounchMoveSpeed;
+        private float moveSpeed;
         [SerializeField] private float rotationSpeed;
         [SerializeField] private Vector3 cameraNormalOffset;
 
@@ -41,6 +43,7 @@ namespace Player
             inputController.inputActions.MovementMap.Crouch.canceled += _ => EndCrounching();
 
             playerNormalHeight = characterController.height;
+            moveSpeed = normalMoveSpeed;
         }
 
         private void Update()
@@ -97,12 +100,14 @@ namespace Player
         private void StartCrounching()
         {
             characterController.height = playerCrounchingHeight;
+            moveSpeed = crounchMoveSpeed;
             mainCam.transform.position = gameObject.transform.position + cameraCrounchingOffset;
         }
 
         private void EndCrounching()
         {
             characterController.height = playerNormalHeight;
+            moveSpeed = normalMoveSpeed;
             gameObject.transform.position += new Vector3(0f, 1f, 0f);
             mainCam.transform.position = gameObject.transform.position + cameraNormalOffset;
         }
