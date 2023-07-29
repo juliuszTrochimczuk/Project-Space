@@ -300,7 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 233473771}
   mainCam: {fileID: 1500536638}
-  moveSpeed: 14
+  normalMoveSpeed: 14
+  crounchMoveSpeed: 8
   rotationSpeed: 45
   cameraNormalOffset: {x: 0, y: 1.25, z: 0}
   jumpStrenght: 10
