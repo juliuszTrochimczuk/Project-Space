@@ -1,11 +1,12 @@
 using UnityEngine;
 using Zenject;
 
-public class ControllerInstaller : MonoInstaller
+namespace Installer
 {
-    [SerializeField] private InputController inputController;
-    public override void InstallBindings()
+    public class ControllerInstaller : MonoInstaller
     {
-        Container.Bind<InputController>().FromInstance(inputController).AsSingle();
+        [SerializeField] private InputController inputController;
+
+        public override void InstallBindings() => Container.Bind<InputController>().FromInstance(inputController).AsSingle();
     }
 }

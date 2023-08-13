@@ -132,6 +132,76 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ActionMap",
+            "id": "78e561cc-4665-4da6-92a5-5104e5592624",
+            "actions": [
+                {
+                    "name": "BasicAction",
+                    "type": "Button",
+                    "id": "57939cf9-bb85-4f68-b901-6f201f5d2fc5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ControllingAction",
+                    "type": "Button",
+                    "id": "7f9eb36f-1a72-47a9-b3ee-9fba563ed3cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "457c93e6-34b6-4f81-8664-ed0e3cc1425d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "7337f2b9-a68d-48ee-912a-9ed8735867e9",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ControllingAction",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "62d1dc6c-8d56-4891-85ce-7cc760d5b6e2",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ControllingAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "be71a15d-1efd-4718-8b17-e3eea1b4d635",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ControllingAction",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": []

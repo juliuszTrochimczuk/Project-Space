@@ -154,6 +154,76 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ActionMap"",
+            ""id"": ""78e561cc-4665-4da6-92a5-5104e5592624"",
+            ""actions"": [
+                {
+                    ""name"": ""BasicAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""57939cf9-bb85-4f68-b901-6f201f5d2fc5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControllingAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f9eb36f-1a72-47a9-b3ee-9fba563ed3cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""457c93e6-34b6-4f81-8664-ed0e3cc1425d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BasicAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7337f2b9-a68d-48ee-912a-9ed8735867e9"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllingAction"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""62d1dc6c-8d56-4891-85ce-7cc760d5b6e2"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllingAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""be71a15d-1efd-4718-8b17-e3eea1b4d635"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ControllingAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -164,6 +234,10 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_MovementMap_MouseRotation = m_MovementMap.FindAction("MouseRotation", throwIfNotFound: true);
         m_MovementMap_Jump = m_MovementMap.FindAction("Jump", throwIfNotFound: true);
         m_MovementMap_Crouch = m_MovementMap.FindAction("Crouch", throwIfNotFound: true);
+        // ActionMap
+        m_ActionMap = asset.FindActionMap("ActionMap", throwIfNotFound: true);
+        m_ActionMap_BasicAction = m_ActionMap.FindAction("BasicAction", throwIfNotFound: true);
+        m_ActionMap_ControllingAction = m_ActionMap.FindAction("ControllingAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -291,11 +365,70 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         }
     }
     public MovementMapActions @MovementMap => new MovementMapActions(this);
+
+    // ActionMap
+    private readonly InputActionMap m_ActionMap;
+    private List<IActionMapActions> m_ActionMapActionsCallbackInterfaces = new List<IActionMapActions>();
+    private readonly InputAction m_ActionMap_BasicAction;
+    private readonly InputAction m_ActionMap_ControllingAction;
+    public struct ActionMapActions
+    {
+        private @InputMap m_Wrapper;
+        public ActionMapActions(@InputMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @BasicAction => m_Wrapper.m_ActionMap_BasicAction;
+        public InputAction @ControllingAction => m_Wrapper.m_ActionMap_ControllingAction;
+        public InputActionMap Get() { return m_Wrapper.m_ActionMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ActionMapActions set) { return set.Get(); }
+        public void AddCallbacks(IActionMapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ActionMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ActionMapActionsCallbackInterfaces.Add(instance);
+            @BasicAction.started += instance.OnBasicAction;
+            @BasicAction.performed += instance.OnBasicAction;
+            @BasicAction.canceled += instance.OnBasicAction;
+            @ControllingAction.started += instance.OnControllingAction;
+            @ControllingAction.performed += instance.OnControllingAction;
+            @ControllingAction.canceled += instance.OnControllingAction;
+        }
+
+        private void UnregisterCallbacks(IActionMapActions instance)
+        {
+            @BasicAction.started -= instance.OnBasicAction;
+            @BasicAction.performed -= instance.OnBasicAction;
+            @BasicAction.canceled -= instance.OnBasicAction;
+            @ControllingAction.started -= instance.OnControllingAction;
+            @ControllingAction.performed -= instance.OnControllingAction;
+            @ControllingAction.canceled -= instance.OnControllingAction;
+        }
+
+        public void RemoveCallbacks(IActionMapActions instance)
+        {
+            if (m_Wrapper.m_ActionMapActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IActionMapActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ActionMapActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ActionMapActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public ActionMapActions @ActionMap => new ActionMapActions(this);
     public interface IMovementMapActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnMouseRotation(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+    }
+    public interface IActionMapActions
+    {
+        void OnBasicAction(InputAction.CallbackContext context);
+        void OnControllingAction(InputAction.CallbackContext context);
     }
 }
