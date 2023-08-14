@@ -112,6 +112,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaControler: 0
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -126,15 +127,15 @@ Material:
     - _Distance: 1.63
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeWidth: 0.93
+    - _EdgeWidth: 0.1
     - _EnvironmentReflections: 1
     - _Float: 0.66
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_Scale: 0.83
-    - _Noise_Strength: 0.99
+    - _Noise_Scale: 30
+    - _Noise_Strength: 50
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
