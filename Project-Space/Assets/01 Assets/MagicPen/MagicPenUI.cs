@@ -14,10 +14,10 @@ namespace MagicPen
 
         private void Awake()
         {
-            for (int i = 0; i < pool.pools.Count; i++)
+            for (int i = 0; i < pool.GetNumberOfPools(); i++)
             {
-                objectsUI[i].icon.sprite = pool.pools[i].icon;
-                objectsUI[i].counter.text = pool.pools[i].ObjectsCount().ToString();
+                objectsUI[i].icon.sprite = pool.GetObjectIconFromPool(i);
+                objectsUI[i].counter.text = pool.GetPoolSize(i).ToString();
                 if (i == objectsUI.Count)
                 {
                     Debug.LogError("There are to many pools, not enough UI places");
@@ -26,7 +26,7 @@ namespace MagicPen
             }
         }
 
-        public void ControllCounter(int index) => objectsUI[index].counter.text = (int.Parse(objectsUI[index].counter.text) - 1).ToString();
+        public void ControllCounter(int index, int changedValue) => objectsUI[index].counter.text = (int.Parse(objectsUI[index].counter.text) + changedValue).ToString();
 
         public void ActualizeBackground(int activeIndex)
         {

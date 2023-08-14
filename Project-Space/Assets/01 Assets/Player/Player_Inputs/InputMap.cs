@@ -169,6 +169,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SpecialAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""44129cec-def1-494a-a703-58214598242e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ControllingAction"",
                     ""type"": ""Button"",
                     ""id"": ""7f9eb36f-1a72-47a9-b3ee-9fba563ed3cd"",
@@ -222,6 +231,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""action"": ""ControllingAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59f36284-eef9-4e4c-887a-093e3a6e86ec"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -237,6 +257,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         // ActionMap
         m_ActionMap = asset.FindActionMap("ActionMap", throwIfNotFound: true);
         m_ActionMap_BasicAction = m_ActionMap.FindAction("BasicAction", throwIfNotFound: true);
+        m_ActionMap_SpecialAction = m_ActionMap.FindAction("SpecialAction", throwIfNotFound: true);
         m_ActionMap_ControllingAction = m_ActionMap.FindAction("ControllingAction", throwIfNotFound: true);
     }
 
@@ -370,12 +391,14 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_ActionMap;
     private List<IActionMapActions> m_ActionMapActionsCallbackInterfaces = new List<IActionMapActions>();
     private readonly InputAction m_ActionMap_BasicAction;
+    private readonly InputAction m_ActionMap_SpecialAction;
     private readonly InputAction m_ActionMap_ControllingAction;
     public struct ActionMapActions
     {
         private @InputMap m_Wrapper;
         public ActionMapActions(@InputMap wrapper) { m_Wrapper = wrapper; }
         public InputAction @BasicAction => m_Wrapper.m_ActionMap_BasicAction;
+        public InputAction @SpecialAction => m_Wrapper.m_ActionMap_SpecialAction;
         public InputAction @ControllingAction => m_Wrapper.m_ActionMap_ControllingAction;
         public InputActionMap Get() { return m_Wrapper.m_ActionMap; }
         public void Enable() { Get().Enable(); }
@@ -389,6 +412,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @BasicAction.started += instance.OnBasicAction;
             @BasicAction.performed += instance.OnBasicAction;
             @BasicAction.canceled += instance.OnBasicAction;
+            @SpecialAction.started += instance.OnSpecialAction;
+            @SpecialAction.performed += instance.OnSpecialAction;
+            @SpecialAction.canceled += instance.OnSpecialAction;
             @ControllingAction.started += instance.OnControllingAction;
             @ControllingAction.performed += instance.OnControllingAction;
             @ControllingAction.canceled += instance.OnControllingAction;
@@ -399,6 +425,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @BasicAction.started -= instance.OnBasicAction;
             @BasicAction.performed -= instance.OnBasicAction;
             @BasicAction.canceled -= instance.OnBasicAction;
+            @SpecialAction.started -= instance.OnSpecialAction;
+            @SpecialAction.performed -= instance.OnSpecialAction;
+            @SpecialAction.canceled -= instance.OnSpecialAction;
             @ControllingAction.started -= instance.OnControllingAction;
             @ControllingAction.performed -= instance.OnControllingAction;
             @ControllingAction.canceled -= instance.OnControllingAction;
@@ -429,6 +458,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     public interface IActionMapActions
     {
         void OnBasicAction(InputAction.CallbackContext context);
+        void OnSpecialAction(InputAction.CallbackContext context);
         void OnControllingAction(InputAction.CallbackContext context);
     }
 }

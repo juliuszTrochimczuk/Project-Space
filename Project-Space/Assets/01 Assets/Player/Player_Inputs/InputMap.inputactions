@@ -147,6 +147,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SpecialAction",
+                    "type": "Button",
+                    "id": "44129cec-def1-494a-a703-58214598242e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ControllingAction",
                     "type": "Button",
                     "id": "7f9eb36f-1a72-47a9-b3ee-9fba563ed3cd",
@@ -200,6 +209,17 @@
                     "action": "ControllingAction",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "59f36284-eef9-4e4c-887a-093e3a6e86ec",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
