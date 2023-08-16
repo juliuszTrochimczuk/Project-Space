@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: aec589540fc215f43b151dd82c5c34ea
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: cd1d93cb6d343cf43850676fe42f5c76
+    m_Address: Assets/01 Assets/WorldBetweenWorlds/Test.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 323afc9ba9718c04db820abaaccaac3c, type: 2}
   m_SchemaSet:
