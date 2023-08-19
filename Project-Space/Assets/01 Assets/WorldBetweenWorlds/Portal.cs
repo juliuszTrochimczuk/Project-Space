@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
@@ -9,6 +10,7 @@ public class Portal : MonoBehaviour
 
     [SerializeField] private Camera playerCam;
     public GameObject player;
+    private CharacterController playerController;
 
     [SerializeField] private Portal connection;
 
@@ -18,6 +20,7 @@ public class Portal : MonoBehaviour
         RenderTexture texture = new RenderTexture(Screen.width, Screen.height, 24);
         portalDoor.material.mainTexture = texture;
         connection.pov.targetTexture = texture;
+        playerController = player.GetComponent<CharacterController>();
     }
 
     private void Update()
@@ -35,15 +38,26 @@ public class Portal : MonoBehaviour
 
             if (dot < 0)
             {
-                float rotDiff = -Quaternion.Angle(transform.rotation, connection.transform.rotation);
-                rotDiff += 180;
-                player.transform.Rotate(Vector3.up, rotDiff);
-
-                Vector3 playerOffset = Quaternion.Euler(0f, rotDiff, 0f) * distToPlayer;
-                player.transform.position = connection.transform.position + playerOffset;
-                playerOverlapping = false;
+                StartCoroutine(Teleportation(distToPlayer));
             }
         }
+    }
+    
+    private IEnumerator Teleportation(Vector3 distToPlayer)
+    {
+        playerController.enabled = false;
+
+        float rotDiff = -Quaternion.Angle(transform.rotation, connection.transform.rotation);
+        rotDiff += 180;
+        player.transform.Rotate(Vector3.up, rotDiff);
+
+        Vector3 playerOffset = Quaternion.Euler(0f, rotDiff, 0f) * distToPlayer;
+        player.transform.position = connection.transform.position;
+        playerOverlapping = false;
+
+        yield return new WaitForEndOfFrame();
+
+        playerController.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -22,14 +22,25 @@ namespace WorldBetweenWorlds
 
         private void SpawnNextNode()
         {
-            if (sceneLoadingHandle.IsDone) Instantiate(portalNodePref, lastNode.position + lastNode.forward * 10, transform.rotation).GetComponent<PortalNode>().connectsTo = sceneLoadingHandle.Result;
-            else Instantiate(corridorNodePref, lastNode.position + lastNode.forward * 10, transform.rotation).GetComponent<PlayerDetector>().onPlayerDetect.AddListener(x => SpawnNextNode());
+            if (sceneLoadingHandle.IsDone)
+            {
+                lastNode = Instantiate(portalNodePref, lastNode.position + lastNode.forward * 10, transform.rotation).transform;
+                lastNode.GetComponent<PortalNode>().connectsTo = sceneLoadingHandle.Result;
+            }
+            else
+            {
+                lastNode = Instantiate(corridorNodePref, lastNode.position + lastNode.forward * 10, transform.rotation).transform;
+                lastNode.GetComponent<PlayerDetector>().onPlayerDetect.AddListener(x => SpawnNextNode());
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            SpawnNextNode();
-            sceneLoadingHandle = Addressables.LoadSceneAsync(nextScene, LoadSceneMode.Single, false);
+            if (!sceneLoadingHandle.IsValid())
+            {
+                sceneLoadingHandle = Addressables.LoadSceneAsync(nextScene, LoadSceneMode.Single, false);
+                SpawnNextNode();
+            }
         }
     }
 }

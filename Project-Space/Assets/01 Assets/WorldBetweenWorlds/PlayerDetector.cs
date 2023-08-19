@@ -7,9 +7,6 @@ public class PlayerDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Player"))
-        {
-            onPlayerDetect?.Invoke(other);
-        }
+        onPlayerDetect?.Invoke(other);
     }
 }

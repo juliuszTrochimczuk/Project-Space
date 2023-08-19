@@ -37,7 +37,7 @@ Transform:
   - {fileID: 4630861334461708739}
   - {fileID: 2799515573346606426}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6427022107244146316
 MonoBehaviour:
@@ -64,6 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f34d0253e6ce94aa8a8f258cff42ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPlayerDetect:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!65 &8332345210247123202
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -79,7 +82,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
