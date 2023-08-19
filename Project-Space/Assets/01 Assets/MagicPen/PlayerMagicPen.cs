@@ -33,7 +33,16 @@ namespace MagicPen
         {
             if (Physics.Raycast(mainCam.position, mainCam.forward, out RaycastHit hit, Mathf.Infinity, drawMask))
             {
-                if (objectsPool.GetObjectFromPool(poolIndex, hit.point)) ui.ControllCounter(poolIndex, -1);
+                GameObject objectFromPool = objectsPool.GetObjectFromPool(poolIndex);
+                if (objectFromPool == null) return;
+                if (!objectFromPool.TryGetComponent(out BoxCollider collider)) return;
+                if (hit.normal == Vector3.up) objectFromPool.transform.position = hit.point + (Vector3.up / 2 * collider.size.y);
+                else if (hit.normal == -Vector3.up) objectFromPool.transform.position = hit.point + (-Vector3.up / 2 * collider.size.y);
+                else if (hit.normal == Vector3.forward) objectFromPool.transform.position = hit.point + (Vector3.forward / 2 * collider.size.z);
+                else if (hit.normal == -Vector3.forward) objectFromPool.transform.position = hit.point + (-Vector3.forward / 2 * collider.size.z);
+                else if (hit.normal == Vector3.right) objectFromPool.transform.position = hit.point + (Vector3.right / 2 * collider.size.x);
+                else if (hit.normal == -Vector3.right) objectFromPool.transform.position = hit.point + (-Vector3.right / 2 * collider.size.x);
+                ui.ControllCounter(poolIndex, -1);
             }
         }
 

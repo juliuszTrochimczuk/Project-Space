@@ -7,7 +7,12 @@ namespace MagicPen
     {
         [SerializeField] private List<Pool> pools;
 
-        public bool GetObjectFromPool(int index, Vector3 placement) => pools[index].GetObject(placement);
+        public GameObject GetObjectFromPool(int index)
+        {
+            if (pools[index].GetObject(out GameObject gettedObject))
+                return gettedObject;
+            return null;
+        }
 
         public Sprite GetObjectIconFromPool(int index) => pools[index].icon;
 
@@ -34,14 +39,15 @@ namespace MagicPen
             [SerializeField] private List<GameObject> objects;
             public Sprite icon;
 
-            public bool GetObject(Vector3 placement)
+            public bool GetObject(out GameObject returningObject)
             {
+                returningObject = null;
                 for (int i = 0; i < objects.Count; i++)
                 {
                     if (!objects[i].activeInHierarchy)
                     {
+                        returningObject = objects[i];
                         objects[i].SetActive(true);
-                        objects[i].transform.position = placement;
                         return true;
                     }
                 }
