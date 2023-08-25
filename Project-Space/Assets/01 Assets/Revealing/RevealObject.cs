@@ -8,9 +8,10 @@ namespace Reveal
         private Material revelMaterial;
         private Coroutine revealCoroutine;
         private Coroutine disapearCoroutine;
+
         [SerializeField] private float requiredTimeToAppear;
         [SerializeField] private float requiredTimeToDisapear;
-        private float timeToDisappear;
+
         public bool isSeeing;
 
         private void Awake()
@@ -29,6 +30,7 @@ namespace Reveal
 
         public void StartRevealing()
         {
+            if (revelMaterial.GetFloat("_Alpha") == 0) return;
             if (revealCoroutine == null) revealCoroutine = StartCoroutine(Revealing());
         }
 
