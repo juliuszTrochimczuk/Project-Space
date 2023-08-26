@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 838961983}
   - component: {fileID: 838961982}
   - component: {fileID: 838961981}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -889,7 +889,7 @@ GameObject:
   - component: {fileID: 1148704852}
   - component: {fileID: 1148704851}
   - component: {fileID: 1148704854}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1092,7 +1092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1550509939}
   - component: {fileID: 1550509940}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CinemachineBrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1158,7 +1158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1679872746}
   - component: {fileID: 1679872745}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RevealObjectPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1204,7 +1204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1920563299}
   - component: {fileID: 1920563300}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
