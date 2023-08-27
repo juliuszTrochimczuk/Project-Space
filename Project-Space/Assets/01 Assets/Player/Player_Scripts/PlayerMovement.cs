@@ -6,7 +6,7 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [Inject] private InputController inputController;
+        [Inject] private Controller.InputController inputController;
 
         [Header("Components")]
         [SerializeField] private CharacterController characterController;
