@@ -1,12 +1,16 @@
-using UnityEngine;
+using Controller;
 using Zenject;
 
 namespace Installer
 {
     public class ControllerInstaller : MonoInstaller
     {
-        [SerializeField] private InputController inputController;
-
-        public override void InstallBindings() => Container.Bind<InputController>().FromInstance(inputController).AsSingle();
+        public override void InstallBindings()
+        {
+            Container.Bind<InputController>().FromComponentOn(gameObject).AsSingle();
+            Container.Bind<Controller.StateMachine.GameStateMachine>().FromComponentOn(gameObject).AsSingle();
+            Container.Bind<Controller.StateMachine.State.TestState>().AsSingle();
+            Container.Bind<Controller.StateMachine.State.TestState2>().AsSingle();
+        }
     }
 }
