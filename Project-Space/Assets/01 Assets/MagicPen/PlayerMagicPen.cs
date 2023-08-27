@@ -5,7 +5,7 @@ namespace MagicPen
 {
     public class PlayerMagicPen : MonoBehaviour
     {
-        [Inject] private InputController inputController;
+        [Inject] private Controller.InputController inputController;
         [Inject] private MagicObjectsPool objectsPool;
         [Inject] private MagicPenUI ui;
 
