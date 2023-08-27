@@ -4,10 +4,10 @@ using Zenject;
 
 namespace Controller.StateMachine
 {
+    public enum GameStateId { Play, Pause, Menu}
+     
     public class GameStateMachine : MonoBehaviour
     {
-        public enum GameStateId { Play, Pause, Menu}
-
         private List<IGameState> states = new List<IGameState>();
 
         [Inject] private State.TestState testState;
