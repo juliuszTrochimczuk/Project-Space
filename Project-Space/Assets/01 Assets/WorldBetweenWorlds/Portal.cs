@@ -7,6 +7,7 @@ public class Portal : MonoBehaviour
     [SerializeField] private Material portalMaterial;
     [SerializeField] private Camera pov;
     private bool playerOverlapping = false;
+    private static bool canTeleport = true; 
 
     [SerializeField] private Camera playerCam;
     public GameObject player;
@@ -32,7 +33,7 @@ public class Portal : MonoBehaviour
         Quaternion toRotate = Quaternion.AngleAxis(portalsRotDelta, Vector3.up);
         pov.transform.rotation = Quaternion.LookRotation(toRotate * playerCam.transform.forward, Vector3.up);
         
-        if (playerOverlapping)
+        if (playerOverlapping && canTeleport)
         {
             float dot = Vector3.Dot(transform.up, transform.position - player.transform.position);
 
@@ -47,6 +48,7 @@ public class Portal : MonoBehaviour
     {
         playerController.enabled = false;
 
+        canTeleport = false;
         float rotDiff = -Quaternion.Angle(transform.rotation, connection.transform.rotation);
         rotDiff += 180;
         player.transform.Rotate(Vector3.up, rotDiff);
@@ -68,5 +70,6 @@ public class Portal : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         playerOverlapping = false;
+        canTeleport = true;
     }
 }
