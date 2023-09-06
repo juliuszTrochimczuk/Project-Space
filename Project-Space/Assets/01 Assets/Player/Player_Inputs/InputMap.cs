@@ -62,6 +62,15 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pick Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""b0abf0e1-3653-4734-9936-c6fbfc8bbeaf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b6db716-8a87-4747-ad68-f5e961243112"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pick Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         m_MovementMap_MouseRotation = m_MovementMap.FindAction("MouseRotation", throwIfNotFound: true);
         m_MovementMap_Jump = m_MovementMap.FindAction("Jump", throwIfNotFound: true);
         m_MovementMap_Crouch = m_MovementMap.FindAction("Crouch", throwIfNotFound: true);
+        m_MovementMap_PickUp = m_MovementMap.FindAction("Pick Up", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +250,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_MovementMap_MouseRotation;
     private readonly InputAction m_MovementMap_Jump;
     private readonly InputAction m_MovementMap_Crouch;
+    private readonly InputAction m_MovementMap_PickUp;
     public struct MovementMapActions
     {
         private @InputMap m_Wrapper;
@@ -237,6 +259,7 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         public InputAction @MouseRotation => m_Wrapper.m_MovementMap_MouseRotation;
         public InputAction @Jump => m_Wrapper.m_MovementMap_Jump;
         public InputAction @Crouch => m_Wrapper.m_MovementMap_Crouch;
+        public InputAction @PickUp => m_Wrapper.m_MovementMap_PickUp;
         public InputActionMap Get() { return m_Wrapper.m_MovementMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +281,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @PickUp.started += instance.OnPickUp;
+            @PickUp.performed += instance.OnPickUp;
+            @PickUp.canceled += instance.OnPickUp;
         }
 
         private void UnregisterCallbacks(IMovementMapActions instance)
@@ -274,6 +300,9 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @PickUp.started -= instance.OnPickUp;
+            @PickUp.performed -= instance.OnPickUp;
+            @PickUp.canceled -= instance.OnPickUp;
         }
 
         public void RemoveCallbacks(IMovementMapActions instance)
@@ -297,5 +326,6 @@ public partial class @InputMap: IInputActionCollection2, IDisposable
         void OnMouseRotation(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnPickUp(InputAction.CallbackContext context);
     }
 }

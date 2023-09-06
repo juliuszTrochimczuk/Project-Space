@@ -1,3 +1,4 @@
+using ModestTree;
 using System.Collections;
 using UnityEngine;
 using Zenject;
@@ -36,6 +37,8 @@ namespace Player
         private bool onGround;
         private Coroutine jumpCoroutine;
 
+        private Vector3 velocity;
+
         private void Start()
         {
             inputController.inputActions.MovementMap.Jump.performed += _ => StartJump();
@@ -51,8 +54,12 @@ namespace Player
             onGround = Physics.Raycast(transform.position, -transform.up, (float)(characterController.height / 2) + 0.1f);
             Move(inputController.inputActions.MovementMap.Move.ReadValue<Vector2>());
             Rotation(inputController.inputActions.MovementMap.MouseRotation.ReadValue<Vector2>());
-            if (jumpCoroutine == null) GravityFall();
+            GravityFall();
 
+            Jumping();
+
+
+            Debug.Log(velocity.y);
         }
 
         private void Move(Vector2 inputVector)
@@ -72,9 +79,22 @@ namespace Player
 
         private void StartJump()
         {
-            if (onGround) jumpCoroutine = StartCoroutine(Jumping());
+            if (onGround)
+                velocity.y = Mathf.Sqrt(maxJumpHeight * -2f * -gravityStrenght);
+        }
+        
+        private void Jumping()
+        {
+            if (onGround && velocity.y <= 0)
+                velocity.y = 0;
+            else
+                velocity.y -= gravityStrenght * Time.deltaTime;
+
+            characterController.Move(velocity * Time.deltaTime);
+            
         }
 
+        /*
         private IEnumerator Jumping()
         {
             float targetJumpHeight = transform.position.y + maxJumpHeight;
@@ -86,7 +106,8 @@ namespace Player
 
             jumpCoroutine = null;
         }
-
+        */
+        
         private void GravityFall()
         {
             if (onGround) gravityForce = 0;
