@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public class InputController : MonoBehaviour
+namespace Controller
 {
-    public InputMap inputActions;
-
-    private void Awake()
+    public class InputController : MonoBehaviour
     {
-        if (inputActions == null) inputActions = new();
-    }
+        public InputMap inputActions;
 
-    private void OnEnable()
-    {
-        inputActions.Enable();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+        private void Awake()
+        {
+            if (inputActions == null) inputActions = new();
+        }
 
-    private void OnDisable() => inputActions.Disable();
+        private void OnEnable()
+        {
+            inputActions.Enable();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        private void OnDisable() => inputActions.Disable();
+    }
 }
